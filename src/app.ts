@@ -1,21 +1,46 @@
 import express, { Application } from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
+import mongoose from 'mongoose';
 
 import controllers from './controllers';
 import Controller from './defaults/Controller';
+
+import config from './config';
+
+const { mongoURI } = config;
 
 class App {
   public application: Application;
 
   constructor() {
     this.application = express();
+    this.connectToMongoDB();
     this.initializeMiddlewares();
     this.initializeResponseHeaders();
     this.initializeRouter();
   }
 
+  private connectToMongoDB() {
+    const mongooseConfig = {
+      useNewUrlParser: true,
+      useFindAndModify: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+    };
+
+    mongoose.connect(mongoURI, mongooseConfig, (err) => {
+      if (err) {
+        throw err;
+      }
+      console.log('🍃 Conncected to mongodb');
+    });
+  }
+
   private initializeMiddlewares() {
     this.application.use(cors());
+    this.application.use(bodyParser.json());
+    this.application.use(bodyParser.urlencoded({ extended: true }));
   }
 
   private initializeResponseHeaders() {

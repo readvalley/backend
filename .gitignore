@@ -1,3 +1,5 @@
+config.ts
+
 lib/
 .DS_Store
 package-lock.json
