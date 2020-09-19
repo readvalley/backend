@@ -1,5 +1,5 @@
 config.ts
-example.png
+*.png
 
 lib/
 .DS_Store

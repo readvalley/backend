@@ -5,6 +5,10 @@ example_text_source = '''미국의 기업인. 페이팔의 전신이 된 온라�
 미래 지향적인 기업인으로 유명하다. 현재도 유망한 산업이나 중소기업에 적극 투자하고 있다. 특히 인공지능에 큰 관심이 있어, 안전한 인공지능 개발 관련 비영리 조직에 7백만 달러를 지원하기도 했다. 그가 남긴 유명한 메시지 중에는 '현시대 인류의 가장 큰 위협은 인공지능이 될 것'이라고 말한 바 있다.
 
 그에 대해 더 자세히 알고 싶다면 김영사에서 번역 출간된 '일론 머스크'를 읽어보면 좋다. 머스크 본인은 물론 다양한 주변 인물들과의 인터뷰를 토대로 상세히 잘 쓰여진 전기이다.
+
+기행과 혁신적인 행보로 기업 CEO 중에서도 인지도와 인기가 높다. 스티브 잡스를 빼고 애플을 논할 수 없듯이 일론 머스크를 빼면 테슬라와 스페이스X를 논할 수 없다.
+
+1971년 남아프리카 공화국 프리토리아에서 엔지니어인 아버지와 모델인 어머니 사이에서 태어났다. 어렸을 때부터 컴퓨터에 관심이 있어 독학으로 프로그래밍 언어를 배우고, 12살 때에는 Blastar라는 이름의 게임을 동생과 함께 만들고 이를 게임 잡지에 500달러(현재 가치로 1200달러)에 판매했다.
 '''
 
 def split_text_into_segments(text: str, segments: int):
@@ -26,27 +30,37 @@ def split_text_into_segments(text: str, segments: int):
       line = ''
   return lines
 
-def render_text_to_image(text_source, output_file_path):
+def render_text_to_images(text_source, output_filename_prefix):
   IMAGE_SIZE = 1000
   FONT_SIZE = 60
 
   letter_in_a_row = int(IMAGE_SIZE / FONT_SIZE * 1.2)
-  print(letter_in_a_row)
-
   lines_in_a_image = int(IMAGE_SIZE * 1.5 / FONT_SIZE)
-  print(lines_in_a_image)
 
-  text_source = '\n'.join([
+  text_lines = [
     line.strip()
     for line in split_text_into_segments(text_source, letter_in_a_row)
-  ])
+  ]
 
-  image = Image.new('RGBA', (IMAGE_SIZE, int(IMAGE_SIZE * 1.5)), (255,255,255))
-  draw = ImageDraw.Draw(image)
-  font = ImageFont.truetype('./resources/NanumMyeongjo.ttf', FONT_SIZE)
+  pages = [
+    '\n'.join(text_lines[i:i+lines_in_a_image]).strip()
+    for i in range(0, len(text_lines), lines_in_a_image)
+  ]
 
-  draw.text((10, 0), text_source, (0,0,0), font=font)
-  image.save(output_file_path)
+  output_files = []
+
+  for page_index, text_source in enumerate(pages):
+    image = Image.new('RGBA', (IMAGE_SIZE, int(IMAGE_SIZE * 1.5)), (255,255,255))
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype('./resources/NanumMyeongjo.ttf', FONT_SIZE)
+    draw.text((10, 0), text_source, (0,0,0), font=font)
+
+    output_filename = f'{output_filename_prefix}-{page_index}.png'
+    image.save(output_filename)
+    output_files.append(output_filename)
+
+  return output_files
 
 if __name__ == '__main__':
-  render_text_to_image(example_text_source, 'example.png')
+  images = render_text_to_images(example_text_source, 'example')
+  print(images)
