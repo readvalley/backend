@@ -1,5 +1,6 @@
 import Controller from '../defaults/Controller';
 import { UserModel } from '../models/User';
+import getRequiredAttributes from '../utils/getRequiredAttributes';
 
 export default class AuthController extends Controller {
   public basePath = '/auth';
@@ -18,7 +19,21 @@ export default class AuthController extends Controller {
       return res.json({ user });
     });
 
-    this.router.post('/join', (req, res) => {
+    this.router.post('/join', async (req, res) => {
+      const requiredAttributes = getRequiredAttributes(UserModel);
+      requiredAttributes.forEach((attribute) => {
+        if (!(attribute in req.body)) {
+          return res.status(400).json({ error: 'wrong fields' });
+        }
+      });
+
+      try {
+        const user = new UserModel(req.body);
+        await user.save();
+        return res.json({ userId: user._id });
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
     });
   }
 }

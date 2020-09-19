@@ -9,7 +9,7 @@ export default class HelloWorldController extends Controller {
   private initializeRoutes() {
     this.router.get('/', (_, res) => {
       return res.json({
-        'whoami': 'Backend service for Readvalley',
+        whoami: 'Backend service for Readvalley',
       });
     });
   }
