@@ -8,7 +8,23 @@ example_text_source = '''미국의 기업인. 페이팔의 전신이 된 온라�
 '''
 
 def split_text_into_segments(text: str, segments: int):
-  return [text[i:i + segments] for i in range(0, len(text), segments)]
+  lines = []
+  line = ''
+  count = 0
+  for i in range(0, len(text)):
+    if text[i] == '\n':
+      lines.append(line)
+      count = 0
+      line = ''
+
+    count += 1
+    line += text[i]
+
+    if segments == count:
+      lines.append(line)
+      count = 0
+      line = ''
+  return lines
 
 def render_text_to_image(text_source, output_file_path):
   IMAGE_SIZE = 1000
@@ -16,7 +32,14 @@ def render_text_to_image(text_source, output_file_path):
 
   letter_in_a_row = int(IMAGE_SIZE / FONT_SIZE * 1.2)
   print(letter_in_a_row)
-  text_source = '\n'.join(split_text_into_segments(text_source, letter_in_a_row))
+
+  lines_in_a_image = int(IMAGE_SIZE * 1.5 / FONT_SIZE)
+  print(lines_in_a_image)
+
+  text_source = '\n'.join([
+    line.strip()
+    for line in split_text_into_segments(text_source, letter_in_a_row)
+  ])
 
   image = Image.new('RGBA', (IMAGE_SIZE, int(IMAGE_SIZE * 1.5)), (255,255,255))
   draw = ImageDraw.Draw(image)
