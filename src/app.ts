@@ -1,7 +1,10 @@
 import express, { Application } from 'express';
+import bearerToken from 'express-bearer-token';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
+
+import attachUserInfo from './middlewares/attachUserInfo';
 
 import controllers from './controllers';
 import Controller from './defaults/Controller';
@@ -41,6 +44,12 @@ class App {
     this.application.use(cors());
     this.application.use(bodyParser.json());
     this.application.use(bodyParser.urlencoded({ extended: true }));
+
+    this.application.use(bearerToken({
+      headerKey: 'Bearer',
+      reqKey: 'token',
+    }));
+    this.application.use(attachUserInfo);
   }
 
   private initializeResponseHeaders() {

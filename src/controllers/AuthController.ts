@@ -1,6 +1,7 @@
 import Controller from '../defaults/Controller';
 import { UserModel } from '../models/User';
 import getRequiredAttributes from '../utils/getRequiredAttributes';
+import issueToken from '../utils/issueToken';
 
 export default class AuthController extends Controller {
   public basePath = '/auth';
@@ -14,9 +15,20 @@ export default class AuthController extends Controller {
     this.router.post('/login', async (req, res) => {
       const { email, password } = req.body;
 
-      const user = await UserModel.findOne({ email, password });
-      console.log(user);
-      return res.json({ user });
+      const user = await UserModel.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      if (user.verifyPassword(password)) {
+        return res.json({
+          user,
+          accessToken: issueToken(user, false),
+          refreshToken: issueToken(user, true),
+        });
+      }
+
+      return res.status(401).json({ error: 'Wrong credentials' });
     });
 
     this.router.post('/join', async (req, res) => {

@@ -11,6 +11,9 @@ export const UserSchema = createSchema({
   klaytnAddress: Type.string({ required: true, unique: true }),
   isPublisher: Type.boolean(),
   description: Type.string(),
+  ...({} as {
+    verifyPassword: (userPassword: string) => boolean;
+  }),
 }, { versionKey: false, timestamps: true });
 
 export type UserDoc = ExtractDoc<typeof UserSchema>;
@@ -29,6 +32,12 @@ UserSchema.methods.toJSON = function () {
   const obj: any = this.toObject();
   delete obj['password'];
   return obj;
+};
+
+UserSchema.methods.verifyPassword = function (userPassword: string): boolean {
+  const [encrypted, salt] = this.password.split('|');
+  const password: string = encryptPassword(userPassword, salt);
+  return (password === encrypted);
 };
 
 export const UserModel = typedModel('User', UserSchema);
