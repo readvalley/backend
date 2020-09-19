@@ -7,10 +7,20 @@ example_text_source = '''미국의 기업인. 페이팔의 전신이 된 온라�
 그에 대해 더 자세히 알고 싶다면 김영사에서 번역 출간된 '일론 머스크'를 읽어보면 좋다. 머스크 본인은 물론 다양한 주변 인물들과의 인터뷰를 토대로 상세히 잘 쓰여진 전기이다.
 '''
 
+def split_text_into_segments(text: str, segments: int):
+  return [text[i:i + segments] for i in range(0, len(text), segments)]
+
 def render_text_to_image(text_source, output_file_path):
-  image = Image.new("RGBA", (1000, 1000), (255,255,255))
+  IMAGE_SIZE = 1000
+  FONT_SIZE = 60
+
+  letter_in_a_row = int(IMAGE_SIZE / FONT_SIZE * 1.2)
+  print(letter_in_a_row)
+  text_source = '\n'.join(split_text_into_segments(text_source, letter_in_a_row))
+
+  image = Image.new('RGBA', (IMAGE_SIZE, int(IMAGE_SIZE * 1.5)), (255,255,255))
   draw = ImageDraw.Draw(image)
-  font = ImageFont.truetype('./resources/NanumMyeongjo.ttf', 60)
+  font = ImageFont.truetype('./resources/NanumMyeongjo.ttf', FONT_SIZE)
 
   draw.text((10, 0), text_source, (0,0,0), font=font)
   image.save(output_file_path)
