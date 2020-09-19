@@ -1,6 +1,9 @@
 config.ts
 *.png
 
+__pycache__/
+*.pyc
+
 lib/
 .DS_Store
 package-lock.json
