@@ -3,6 +3,7 @@ import bearerToken from 'express-bearer-token';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import path from 'path';
 
 import attachUserInfo from './middlewares/attachUserInfo';
 import errorHandler from './middlewares/errorHandler';
@@ -52,6 +53,7 @@ class App {
       reqKey: 'token',
     }));
     this.application.use(attachUserInfo);
+    this.application.use('/streams', express.static(path.join(__dirname, '../streams')));
   }
 
   private initializeResponseHeaders() {

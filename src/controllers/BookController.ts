@@ -54,10 +54,10 @@ export default class BookController extends Controller {
         return res.status(400).json({ error: 'article is empty' });
       }
 
-      // TODO: render files
-      // TODO: get path of rendered files & stream => based on document objectId
-      // TODO: register to blockchain => addBook()
-      // TODO: update book
+      // render files
+      // get path of rendered files & stream => based on document objectId
+      // register to blockchain => addBook()
+      // update book
       await book.update({ isPublished: true });
       return res.json({});
     });
