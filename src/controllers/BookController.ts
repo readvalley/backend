@@ -62,6 +62,11 @@ export default class BookController extends Controller {
       return res.json({});
     });
 
+    this.router.get('/', checkAuth, async (_, res) => {
+      const books = await BookModel.find({});
+      return res.json({ books });
+    });
+
     this.router.get('/:bookId', checkAuth, async (req, res) => {
       const bookId = req.params.bookId;
       const book = await BookModel.findById(bookId);

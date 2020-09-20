@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" profiles="urn:mpeg:dash:profile:isoff-live:2011" minBufferTime="PT0.05S" mediaPresentationDuration="PT0.050S" type="static">
+  <!-- Created with Bento4 mp4-dash.py, VERSION=2.0.0-632 -->
+  <Period>
+    <!-- Video -->
+    <AdaptationSet mimeType="video/mp4" segmentAlignment="true" startWithSAP="1" maxWidth="1000" maxHeight="1500">
+      <SegmentTemplate timescale="1000" duration="50" initialization="$RepresentationID$/init.mp4" media="$RepresentationID$/seg-$Number$.m4s" startNumber="1"/>
+      <Representation id="video/mp4v" codecs="mp4v" width="1000" height="1500" scanType="progressive" frameRate="20" bandwidth="17972160"/>
+    </AdaptationSet>
+  </Period>
+</MPD>

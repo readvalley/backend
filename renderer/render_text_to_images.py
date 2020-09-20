@@ -17,6 +17,7 @@ def split_text_into_segments(text: str, segments: int):
       lines.append(line)
       count = 0
       line = ''
+  lines.append(line)
   return lines
 
 def render_text_to_images(text_source, output_filename_prefix):

@@ -49,6 +49,10 @@ get_json(
   requests.get(api('/private'), headers=headers())
 )
 
+get_json(
+  requests.get(api('/book'), headers=headers())
+)
+
 # get_json(
 #   requests.post(api('/book/register'),
 #     headers=headers(),
