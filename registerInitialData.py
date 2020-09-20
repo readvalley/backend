@@ -13,6 +13,12 @@ user = {
   'klaytnAddress': '0x4255b46f7481d420f510dea6cd5cd5de59c5b2db',
 }
 
+book = {
+  'title': '일론 머스크',
+  'description': '일론 머스크, 그는 누구인가?',
+  'thumbnailURL': 'https://images.unsplash.com/photo-1551946650-60a22105bcb0?auto=format&fit=crop&w=1600&q=80',
+}
+
 def api(path):
   return BASE_URL + path
 
@@ -42,3 +48,10 @@ def headers():
 get_json(
   requests.get(api('/private'), headers=headers())
 )
+
+# get_json(
+#   requests.post(api('/book/register'),
+#     headers=headers(),
+#     json=book,
+#   )
+# )
