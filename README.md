@@ -8,7 +8,7 @@
 
 3. Add invisible image watermarks
 
-<img src="./docs/watermark-black.png" width="256"><img src="./docs/watermark-invisable.png" width="256">
+<img src="./docs/watermark-black.png?v=2" width="256"><img src="./docs/watermark-invisable.png?v=2" width="256">
 
 4. Pack each image as MPEG-CENC content
 5. Upload the encryption key to the blockchain, etc.
