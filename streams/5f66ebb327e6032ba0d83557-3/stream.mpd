@@ -5,7 +5,7 @@
     <!-- Video -->
     <AdaptationSet mimeType="video/mp4" segmentAlignment="true" startWithSAP="1" maxWidth="1000" maxHeight="1500">
       <SegmentTemplate timescale="1000" duration="50" initialization="$RepresentationID$/init.mp4" media="$RepresentationID$/seg-$Number$.m4s" startNumber="1"/>
-      <Representation id="video/mp4v" codecs="mp4v" width="1000" height="1500" scanType="progressive" frameRate="20" bandwidth="17972160"/>
+      <Representation id="video/avc1" codecs="avc1.640028" width="1000" height="1500" scanType="progressive" frameRate="20" bandwidth="24663360"/>
     </AdaptationSet>
   </Period>
 </MPD>
