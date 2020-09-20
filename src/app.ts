@@ -5,6 +5,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 
 import attachUserInfo from './middlewares/attachUserInfo';
+import errorHandler from './middlewares/errorHandler';
 
 import controllers from './controllers';
 import Controller from './defaults/Controller';
@@ -22,6 +23,7 @@ class App {
     this.initializeMiddlewares();
     this.initializeResponseHeaders();
     this.initializeRouter();
+    this.initializeErrorhandlers();
   }
 
   private connectToMongoDB() {
@@ -66,6 +68,10 @@ class App {
       this.application.use(controller.basePath, controller.router);
     });
     this.application.use(router);
+  }
+
+  private initializeErrorhandlers() {
+    this.application.use(errorHandler);
   }
 }
 
