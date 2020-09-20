@@ -1,10 +1,10 @@
 import { createSchema, Type, typedModel } from 'ts-mongoose';
 import { UserSchema } from '../User';
-import { ArticleSchema } from '../Article';
+import { BookSchema } from '../Book';
 
 const HeartSchema = createSchema({
   creator: Type.ref(Type.objectId()).to('User', UserSchema),
-  article: Type.ref(Type.objectId()).to('Article', ArticleSchema),
+  book: Type.ref(Type.objectId()).to('Book', BookSchema),
 }, { versionKey: false, timestamps: true });
 
 const HeartModel = typedModel('Heart', HeartSchema);
