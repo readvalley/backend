@@ -61,5 +61,21 @@ export default class BookController extends Controller {
       await book.update({ isPublished: true });
       return res.json({});
     });
+
+    this.router.get('/:bookId', checkAuth, async (req, res) => {
+      const bookId = req.params.bookId;
+      const book = await BookModel.findById(bookId);
+      if (!book) {
+        return res.status(400).json({ error: 'No such book' });
+      }
+
+      const { pages = 0 } = book;
+      const streams = [...Array(pages)].map((_, index) =>
+        `/streams/${book._id}-${index}/stream.mpd`);
+      return res.json({
+        book,
+        streams,
+      });
+    });
   }
 }

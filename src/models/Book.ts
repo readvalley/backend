@@ -11,6 +11,7 @@ const BookSchema = createSchema({
   isPublished: Type.boolean({ default: false }),
   key: Type.string(),
   kid: Type.string(),
+  pages: Type.number(),
 }, { versionKey: false, timestamps: true });
 
 const BookModel = typedModel('Book', BookSchema);
