@@ -10,7 +10,11 @@ example_text_source = '''미국의 기업인. 페이팔의 전신이 된 온라�
 '''
 
 from render_text_to_images import render_text_to_images
+from add_invisiable_watermark import add_invisiable_watermark
 
 if __name__ == '__main__':
   images = render_text_to_images(example_text_source, 'example')
   print(images)
+
+  for image in images:
+    add_invisiable_watermark(image, '0x507f1f77bcf86cd799439011')

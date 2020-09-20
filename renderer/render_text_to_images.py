@@ -32,7 +32,7 @@ def render_text_to_images(text_source, output_filename_prefix):
   ]
 
   pages = [
-    '\n'.join(text_lines[i:i+lines_in_a_image]).strip()
+    '\n'.join(text_lines[i:i + lines_in_a_image]).strip()
     for i in range(0, len(text_lines), lines_in_a_image)
   ]
 
