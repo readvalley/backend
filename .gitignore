@@ -1,5 +1,6 @@
 config.ts
 *.png
+*.mp4
 
 __pycache__/
 *.pyc

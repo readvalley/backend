@@ -9,8 +9,27 @@ example_text_source = '''미국의 기업인. 페이팔의 전신이 된 온라�
 1971년 남아프리카 공화국 프리토리아에서 엔지니어인 아버지와 모델인 어머니 사이에서 태어났다. 어렸을 때부터 컴퓨터에 관심이 있어 독학으로 프로그래밍 언어를 배우고, 12살 때에는 Blastar라는 이름의 게임을 동생과 함께 만들고 이를 게임 잡지에 500달러(현재 가치로 1200달러)에 판매했다.
 '''
 
+import cv2
 from render_text_to_images import render_text_to_images
 from add_invisiable_watermark import add_invisiable_watermark
+
+def convert_image_to_mp4(image, output_filename, fps = 20.0) :
+  paths = [image]
+  frame_array = []
+  for path in paths:
+      img = cv2.imread(path)
+      print(img.shape)
+      height, width, _ = img.shape
+      size = (width, height)
+      frame_array.append(img)
+  out = cv2.VideoWriter(
+    output_filename,
+    cv2.VideoWriter_fourcc(*'MP4V'),
+    fps, size
+  )
+  for i in range(len(frame_array)):
+    out.write(frame_array[i])
+  out.release()
 
 if __name__ == '__main__':
   images = render_text_to_images(example_text_source, 'example')
@@ -18,3 +37,4 @@ if __name__ == '__main__':
 
   for image in images:
     add_invisiable_watermark(image, '0x507f1f77bcf86cd799439011')
+    convert_image_to_mp4(image, image.replace('png', 'mp4'))

@@ -4,6 +4,7 @@
 
 - Python3
 - PIL
+- OpenCV
 - [Bento4](https://github.com/axiomatic-systems/Bento4)
 
 ## POST book/register
