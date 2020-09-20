@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Python3
+- Python3 >= 3.8.2
 - PIL
 - OpenCV
 - [Bento4](https://github.com/axiomatic-systems/Bento4)

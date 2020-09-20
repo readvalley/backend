@@ -9,6 +9,8 @@ const BookSchema = createSchema({
   series: Type.ref(Type.objectId()).to('Series', SeriesSchema),
   thumbnailURL: Type.string({ required: true }),
   isPublished: Type.boolean({ default: false }),
+  key: Type.string(),
+  kid: Type.string(),
 }, { versionKey: false, timestamps: true });
 
 const BookModel = typedModel('Book', BookSchema);
