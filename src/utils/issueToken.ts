@@ -7,7 +7,6 @@ export default async (identity: UserDoc, refresh: boolean) => {
   if (!refresh) {
     const token = await jwt.sign({ identity }, config.jwtSecret as string, {
       algorithm: 'HS256',
-      expiresIn: '1w',
     });
     return token;
   }

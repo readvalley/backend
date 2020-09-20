@@ -13,7 +13,7 @@ export default class BookController extends Controller {
   }
 
   private initializeRoutes() {
-    this.router.post('/register', async (req, res) => {
+    this.router.post('/register', checkAuth, async (req, res) => {
       const requiredAttributes = getRequiredAttributes(BookModel);
       requiredAttributes.forEach((attribute) => {
         if (!(attribute in req.body)) {
@@ -22,8 +22,13 @@ export default class BookController extends Controller {
         }
       });
 
+      const identity = req.app.get('user');
       try {
-        const book = new BookModel(req.body);
+        const book = new BookModel({
+          ...req.body,
+          series: null,
+          creator: identity._id,
+        });
         await book.save();
         return res.json({ bookId: book._id });
       } catch (error) {
@@ -42,6 +47,8 @@ export default class BookController extends Controller {
         return res.status(400).json({ error: 'No such book' });
       }
 
+      const identity = req.app.get('user');
+      console.log(identity);
       const { article } = req.body;
       if (!article) {
         return res.status(400).json({ error: 'article is empty' });
