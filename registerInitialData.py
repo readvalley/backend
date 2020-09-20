@@ -25,10 +25,20 @@ get_json(
   requests.get(api('/'))
 )
 
-get_json(
+login_response = get_json(
   requests.post(api('/auth/login'), json=user)
 )
+token = login_response['accessToken']
 
 get_json(
   requests.post(api('/auth/join'), json=user)
+)
+
+def headers():
+  return {
+    'Authorization': 'Bearer {}'.format(token)
+  }
+
+get_json(
+  requests.get(api('/private'), headers=headers())
 )

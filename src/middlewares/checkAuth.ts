@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import verifyToken from '../utils/verifyToken';
 
-const checkAuth = () => (req: Request, res: Response, next: NextFunction) => {
+const checkAuth = (req: Request, res: Response, next: NextFunction) => {
   if (!req.token) {
     return res.status(403).json({
       error: 'token is missing',

@@ -14,7 +14,7 @@ export default class HelloWorldController extends Controller {
       });
     });
 
-    this.router.get('/private', checkAuth(), (_, res) => {
+    this.router.get('/private', checkAuth, (_, res) => {
       return res.json({
         wow: 'you found the secret route!',
       });

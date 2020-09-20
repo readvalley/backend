@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import verifyToken from '../utils/verifyToken';
 
-const attachUserInfo = (req: Request, res: Response, next: NextFunction) => {
+const attachUserInfo = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.token) {
     return next();
   }
   const { token } = req;
   try {
-    const identity = verifyToken(token);
+    const identity = await verifyToken(token);
     req.app.set('user', identity);
     return next();
   } catch (err) {
