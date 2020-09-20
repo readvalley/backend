@@ -23,8 +23,8 @@ export default class AuthController extends Controller {
       if (user.verifyPassword(password)) {
         return res.json({
           user,
-          accessToken: issueToken(user, false),
-          refreshToken: issueToken(user, true),
+          accessToken: await issueToken(user, false),
+          // refreshToken: await issueToken(user, true),
         });
       }
 
@@ -35,6 +35,7 @@ export default class AuthController extends Controller {
       const requiredAttributes = getRequiredAttributes(UserModel);
       requiredAttributes.forEach((attribute) => {
         if (!(attribute in req.body)) {
+          console.log(attribute)
           return res.status(400).json({ error: 'wrong fields' });
         }
       });

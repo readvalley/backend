@@ -16,7 +16,8 @@ export default async (identity: UserDoc, refresh: boolean) => {
       _id: identity._id,
       refresh: true,
     },
-      config.jwtSecret as string,
+    config.jwtSecret as string,
   );
+  console.log(token);
   return token;
 };
