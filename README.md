@@ -10,7 +10,7 @@
 ## POST book/register
 Register information for Book
 
-## POST book/publish  ⇒ Main DRM Logic
+## POST book/publish/:bookId  ⇒ Main DRM Logic
 1. User uploads book article as plaintext
 2. Render article as images, cropped to regular sizes
 
@@ -22,6 +22,11 @@ Register information for Book
 
 4. Convert each image as one-frame MP4 video
 5. Pack each video as MPEG-CENC content, using kid & key
-6. Upload the kid, key to database
-7. Call the contract function `addBook` for blockchain register
-8. Update field `isPublished` for BookModel
+6. generate MPEG-DASH streams
+7. Upload the kid, key to database
+8. Call the contract function `addBook` for blockchain register
+9. Update field `isPublished` for BookModel
+
+## GET book/:bookId ⇒ DRM Viewer Logic
+1. Giveout stream path, base64-encoded(without padding characters) kid & key
+2. Render with dash.js, autopause mediaplayer to enable reading
