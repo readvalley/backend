@@ -6,6 +6,9 @@ def add_invisiable_watermark(image_path, watermark_object_id):
   watermark_object_id_as_binary = [int(x) for x in bin(watermark_object_id_as_number)[2:]]
   print(watermark_object_id_as_binary)
 
+  blank = [0] * 30
+  watermark_object_id_as_binary = (watermark_object_id_as_binary + blank) * 8
+
   pixels = image.load()
   print(image.size)
   row_count = 0
